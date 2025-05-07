@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Chip-8 Emulator</title>
+  <style>
+    body { margin: 0; background-color: #2b2b2b; text-align: center; }
+    canvas { display: block; margin: 0 auto; }
+    .container { max-width: 800px; margin: 0 auto; padding: 20px; color: white; font-family: Arial, sans-serif; }
+    .drop-zone { border: 2px dashed #ccc; border-radius: 5px; padding: 20px; margin: 20px 0; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Chip-8 Emulator</h1>
+    
+    <div id="game-container"></div>
+    
+    <div class="drop-zone" id="dropZone">
+      <p>Drag and drop a Chip-8 ROM file here</p>
+    </div>
+    
+    <div>
+      <p>Keyboard mapping:</p>
+      <pre>
+Chip-8 keypad:    Keyboard:
+1 2 3 C           1 2 3 4
+4 5 6 D    maps to    Q W E R
+7 8 9 E           A S D F
+A 0 B F           Z X C V
+      </pre>
+    </div>
+  </div>
+
+  <script src="wasm_exec.js"></script>
+  <script>
+    const go = new Go();
+    WebAssembly.instantiateStreaming(fetch("chip8.wasm"), go.importObject)
+      .then((result) => {
+        go.run(result.instance);
+        
+        const dropZone = document.getElementById('dropZone');
+        
+        dropZone.addEventListener('dragover', (e) => {
+          e.preventDefault();
+          dropZone.style.backgroundColor = '#444';
+        });
+        
+        dropZone.addEventListener('dragleave', () => {
+          dropZone.style.backgroundColor = '';
+        });
+        
+        dropZone.addEventListener('drop', (e) => {
+          e.preventDefault();
+          dropZone.style.backgroundColor = '';
+          
+          if (e.dataTransfer.files.length > 0) {
+            const file = e.dataTransfer.files[0];
+            const reader = new FileReader();
+            
+            reader.onload = (event) => {
+              const romData = new Uint8Array(event.target.result);
+              const result = loadROM(romData);
+              console.log(result);
+            };
+            
+            reader.readAsArrayBuffer(file);
+          }
+        });
+      });
+  </script>
+</body>
+</html>
