@@ -7,6 +7,12 @@
 CHIP-8 is an interpreted programming language created by Joseph Weisbecker in the mid-1970s. It was designed to simplify game programming on 8-bit microcomputers like the COSMAC VIP and Telmac 1800. CHIP-8 programs run on a virtual machine with the following specifications:
 </p>
 
+<div align="center">
+  <img width="1271" alt="image" src="https://github.com/user-attachments/assets/9a1cf63c-a3ab-4236-85ca-1e6125e11f28" />
+  <img width="1268" alt="image" src="https://github.com/user-attachments/assets/05a7f41d-d4cd-46a9-9e35-c2ca562fdcd0" />
+  <img width="1267" alt="image" src="https://github.com/user-attachments/assets/a0c4f8f8-074c-41ed-b83a-70bac593f145" />
+</div>
+
 - **Memory:** 4KB (4096 bytes)
 - **Display:** 64×32 pixels, monochrome
 - **Registers:** 16 8-bit registers (V0 to VF)
